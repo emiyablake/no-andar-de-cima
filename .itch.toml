@@ -1,0 +1,9 @@
+[ignore]
+patterns = [
+    ".git/*",
+    ".github/*",
+    ".gitignore",
+    ".env",
+    "docs/*",
+    "README.md"
+]
