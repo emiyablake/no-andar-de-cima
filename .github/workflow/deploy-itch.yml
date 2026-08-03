@@ -1,0 +1,21 @@
+name: Deploy itch.io
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      -name: Check out repository
+      uses: actions/checkout@v4
+
+      -name: Upload to itch.io
+      uses: robpc/itchio-upload-action@v1
+      with:
+        path: .
+        project: emiyablake/no-andar-de-cima
+        channel: web
+        api-key: ${{ secrets.BUTLER_API_KEY }}
