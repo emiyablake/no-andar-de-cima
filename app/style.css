@@ -1,0 +1,296 @@
+/* Fontes originais do jogo (fonts.lua).*/
+@font-face {
+  font-family: "W95FA";
+  src: url("assets/fonts/W95FA.otf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Crang";
+  src: url("assets/fonts/Crang.ttf");
+  font-display: swap;
+}
+
+:root {
+  /* Paleta extraída do código Lua */
+  --cor-black: rgb(35, 34, 41); 
+  --cor-fundo: rgb(68, 64, 104);        /* love.graphics.setBackgroundColor (main.lua) */
+  --cor-botao: rgb(223, 113, 38);       /* estado normal (button.lua)   */
+  --cor-hover: rgb(252, 135, 56); /* hover (button.lua)           */
+  --cor-cont-hover:rgb(106, 190, 48);
+  --cor-active: rgb(150, 71, 18); /* pressionado (button.lua)  */
+  --cor-texto: rgb(255, 255, 255);
+  --cor-title: rgb(153, 229, 80);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: "W95FA", "Courier New", monospace; /* W95FA = fonte padrão (24px no LÖVE) */
+  font-size: 24px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+/* Janela do jogo: 1080x1080 no conf.lua; aqui ela se adapta à tela */
+#game {
+  width: 100%;
+  max-width: 1080px;
+  min-height: 100vh;
+  position: relative;
+  padding: 100px 50px 50px; /* marginY = 100, marginX = 50 (game_logic.lua) */
+}
+
+/* ---------- Tela do menu ---------- */
+
+#menu-screen {
+  position: relative;
+  min-height: calc(100vh - 150px);
+}
+
+#menu-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.title {
+  font-family: "Crang", "Arial Black", sans-serif; /* fonte do título (42px no LÖVE) */
+  font-size: 52px;
+  color: var(--cor-title);
+ text-shadow: 3px 10px 5px rgba(0, 0, 0, 0.856);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.menu-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.menu-capa {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: var(--title);
+}
+
+#predio {
+  width: min(420px, 90vw);
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* startY=200, loadY=300, exitY=400 no menu.lua */
+}
+
+.menu-buttons .button {
+  width: 200px; /* buttonWidth do menu.lua */
+  text-align: center;
+}
+
+/* ---------- Componentes (buttons/dropdowns ...) ---------- */
+
+.button {
+  height: 50px;
+  padding: 0 15px; /* padding = 15 (button.lua) */
+  background-color: var(--cor-botao);
+  color: rgb(0, 0, 0);
+  font-family: inherit;
+  font-size: 24px;
+  border: none;
+  border-radius: 5px; /* rectangle("fill", ..., 5) */
+  cursor: pointer;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: var(--cor-hover);
+}
+
+.button:active {
+  background-color: var(--cor-active);
+}
+
+.dropdown {
+  flex: 1;
+  height: 50px;
+  padding: 0 15px; /* padding = 15 (button.lua) */
+  background-color: var(--cor-botao);
+  color: rgb(0, 0, 0);
+  font-family: inherit;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px; /* rectangle("fill", ..., 5) */
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown:hover {
+  background-color: var(--cor-hover);
+}
+
+.dropdown:active {
+  background-color: var(--cor-active);
+}
+
+/* ---------- Tela do jogo (game_logic.lua) ---------- */
+
+#story-text {
+  max-width: 800px; /* maxTextWidth = 800 */
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+#story-subtext {
+  max-width: 800px;
+  margin-top: 20px; /* lineSpacing = 20 */
+  font-weight: bold;
+}
+
+#options {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px; /* buttonSpacing = 20 */
+}
+
+/* ---------- Botão de pausa (canto superior direito, durante o jogo) ---------- */
+
+#btn-pause {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 5;
+  height: auto;
+  padding: 8px 15px;
+  font-size: 18px;
+}
+
+/* ---------- Menu de pausa in-game (pause.js) ---------- */
+
+#pause-screen,
+#settings-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(20, 18, 35, 0.85); /* véu escuro sobre a cena */
+}
+
+#pause-panel {
+  background-color: rgb(48, 44, 76); /* variação do --cor-fundo */
+  border: 2px solid var(--cor-botao);
+  border-radius: 5px;
+  padding: 40px;
+  width: min(90vw, 480px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#pause-panel h2 {
+  font-size: 32px;
+  color: var(--cor-botao);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#settings-panel {
+  background-color: rgb(48, 44, 76);
+  border: 2px solid var(--cor-botao);
+  border-radius: 5px;
+  padding: 40px;
+  width: min(90vw, 480px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.volume-control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.volume-control label {
+  font-size: 20px;
+}
+
+.volume-control input[type="range"] {
+  width: 100%;
+  accent-color: var(--cor-botao); /* slider na cor laranja do jogo */
+  cursor: pointer;
+}
+
+.volume-control small,
+.save-note {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.save-note {
+  text-align: center;
+}
+
+.lang-control{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lang-row{
+  display: flex;
+}
+
+/* ---------- Tela de cena não encontrada / fim provisório ---------- */
+/* (O TODO do game_logic.lua pedia uma tela "escape" para cenas não criadas) */
+
+#missing-screen p {
+  max-width: 800px;
+  line-height: 1.4;
+  margin-bottom: 40px;
+}
+
+/* ---------- Tela de despedida (substitui love.event.quit) ---------- */
+
+#quit-screen {
+  text-align: center;
+  padding-top: 200px;
+}
+
+#quit-screen .button {
+  margin: 40px auto 0;
+  text-align: center;
+}
+
+/* Utilitário */
+.hidden {
+  display: none !important;
+}

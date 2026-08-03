@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- index.html — "No Andar de Cima" (port web do projeto LÖVE em Lua) -->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No Andar de Cima</title> <!-- t.window.title (conf.lua) -->
+  <link rel="icon" href="assets/sprites/predio.png" /> <!-- t.window.icon (conf.lua) -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game">
+
+    <!-- Tela do menu (menu.lua) -->
+    <section id="menu-screen">
+      <img id="menu-bg" src="assets/sprites/background 2.png" alt="céu noturno com nuvens" />
+      <h1 class="title">No Andar de Cima</h1>
+      <div class="menu-content">
+        <img id="predio" src="assets/sprites/predio.png"
+          alt="prédio laranja em pixel art com janelas emitindo luz" />
+        <nav class="menu-buttons">
+          <button id="btn-start" class="button" data-i18n="menu.start">Iniciar jogo</button>
+          <button id="btn-load" class="button" data-i18n="menu.load">Carregar Jogo</button>
+          <button id="btn-settings" class="button" data-i18n="menu.settings">Configurações</button>
+          <button id="btn-exit" class="button" data-i18n="menu.exit">Sair do jogo</button>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Tela do jogo (game_logic.lua) -->
+    <section id="game-screen" class="hidden">
+      <button id="btn-pause" class="button" data-i18n="game.pause">❚❚ Pausa</button>
+      <p id="story-text"></p>
+      <p id="story-subtext"></p>
+      <div id="options"></div>
+    </section>
+
+    <!-- Menu de pausa in-game (o TODO do game_logic.lua pedia para
+         "idealizar melhor o botão de pausa") -->
+    <section id="pause-screen" class="hidden">
+      <div id="pause-panel">
+        <h2 data-i18n="pause.title">Pausa</h2>
+        <button id="btn-resume" class="button" data-i18n="pause.resume">Continuar</button>
+        <button id="btn-restart" class="button" data-i18n="pause.restart">Reiniciar história</button>
+        <button id="btn-pause-settings" class="button" data-i18n="pause.settings">Configurações</button>
+        <button id="btn-pause-menu" class="button" data-i18n="pause.backToMenu">Voltar ao menu principal</button>
+      </div>
+    </section>
+
+    <!-- Tela de confiurações (settings.js) - overlay compartilhado entre menu principal e pausa -->
+    <section id="settings-screen" class="hidden">
+      <div id="settings-panel" class="panel">
+        <h2 data-i18n="settings-title" style="text-align: center;">Configurações</h2>
+
+        <div class="volume-control">
+          <label for="vol-sfx" data-i18n="settings.volumeSfx">Volume dos efeitos</label>
+          <input type="range" id="vol-sfx" min="0" max="100" value="100" />
+        </div>
+        <div class="volume-control">
+          <label for="vol-music" data-i18n="settings.volumeMusic">Volume da música</label>
+          <input type="range" id="vol-music" min="0" max="100" value="100" />
+          <small data-i18n="settings.musicNote">Aplica-se às trilhas do menu e do jogo.</small>
+        </div>
+
+        <div class="lang-control">
+          <label data-i18n="settings.language">Idioma</label>
+          <div class="lang-row">
+            <select name="" id="lang-option" class="dropdown" >
+              <option data-lang="pt-BR">Português</option>
+              <option data-lang="en">Inglês</option>
+            </select>
+            <!--
+            <button class="button lang-option active" data-lang="pt-BR">Português</button>
+            <button class="button lang-option" data-lang="en">English</button>
+            -->
+          </div>
+        </div>
+
+        <button id="btn-settings-back" class="button" data-i18n="settings.back">Voltar</button>
+        <small class="save-note" data-i18n="settings.saveNote">Seu progresso é salvo automaticamente.</small>
+      </div>
+    </section>
+
+    <!-- Tela "escape" para cenas não criadas (TODO do game_logic.lua) -->
+    <section id="missing-screen" class="hidden">
+      <p id="missing-text"></p>
+      <button class="button btn-menu" data-i18n="missing.backToMenu">Voltar ao menu</button>
+    </section>
+
+    <!-- Tela de saída (substitui love.event.quit, que não existe no navegador) -->
+    <section id="quit-screen" class="hidden">
+      <p>Obrigado por jogar <strong>No Andar de Cima</strong>!<br />Você já pode fechar esta aba.</p>
+      <button class="button btn-menu">Voltar ao menu</button>
+    </section>
+
+  </div>
+
+  <!-- Trilha sonora: -->
+  <audio id="menu-music" src="assets/music/menu-music-nadc.mp3" preload="auto" loop
+    data-loop-start="12"
+    data-loop-end="24"
+  ></audio>
+  <audio id="game-music" src="assets/music/game-music-nadc.mp3" preload="auto" loop
+    data-loop-start="24"
+    data-loop-end="71"
+  ></audio>
+
+  <script src="src/story.js"></script>
+  <script src="src/lang.js"></script>
+  <script src="src/game_logic.js"></script>
+  <script src="src/pause.js"></script>
+  <script src="src/settings.js"></script>
+  <script src="src/music.js"></script>
+  <script src="src/menu.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>
