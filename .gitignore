@@ -1,0 +1,21 @@
+# variáveis de ambiente
+/.env
+
+# docs internos
+/docs
+
+# arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editores
+.vscode/
+.idea/
+
+# logs e temporários
+*.log
+
+# builds / empacotamento 
+/dist/
+*.zip
